@@ -1,8 +1,10 @@
-package com.example.aniket.googlemapsintegration.model;
+package com.example.aniket.googlemapsintegration.api;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
+import com.example.aniket.googlemapsintegration.model.DirectionFinderListener;
+import com.example.aniket.googlemapsintegration.model.Distance;
+import com.example.aniket.googlemapsintegration.model.Route;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonElement;
 
@@ -10,7 +12,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
@@ -28,19 +29,17 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import java.util.List;
 
-import javax.xml.datatype.Duration;
-
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import okhttp3.Request;
 import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Query;
 
 
 /**
@@ -63,54 +62,76 @@ public class DirectionFinder
 
     public interface MyApiRequestInterface {
 
-        @GET("/maps/api/directions/json")
-        public void getJson(@Query("origin") String origin, @Query("destination") String destination, @Query("key") String key, Callback<JsonElement>callback);}
+        @retrofit2.http.GET("/maps/api/directions/json")
+        Call<JsonElement> loadRepo(@Query("origin") String origin, @Query("destination") String destination, @Query("key") String key);
+//        public void getJson(@Query("origin") String origin, @Query("destination") String destination, @Query("key") String key, Callback<JsonElement>callback);
+    }
         public void execute() throws UnsupportedEncodingException {
             listener.onDirectionFinderStart();
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-//                    .setConverter(new StringConverter())
-                    .setEndpoint("https://maps.googleapis.com").build();
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("https://maps.googleapis.com/")
-////                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
+//            RestAdapter restAdapter = new RestAdapter.Builder()
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+////                    .setConverter(new StringConverter())
+//                    .setEndpoint("https://maps.googleapis.com").build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://maps.googleapis.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
+MyApiRequestInterface r=retrofit.create(MyApiRequestInterface.class);
+            Call<JsonElement> call=r.loadRepo(origin,destination,GOOGLE_API_KEY);
+            call.enqueue(new Callback<JsonElement>() {
+                @Override
+                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                    JsonElement j=response.body();
 
-MyApiRequestInterface r=restAdapter.create(MyApiRequestInterface.class);
-//            r.getJson(origin, destination,GOOGLE_API_KEY, new Callback<String>() {
+//                    String t=response.body();
+                    try {
+                        parseJSon(j.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonElement> call, Throwable t) {
+
+                }
+            });
+
+//MyApiRequestInterface r=restAdapter.create(MyApiRequestInterface.class);
+//            r.getJson(origin, destination,GOOGLE_API_KEY, new Callback<JsonElement>() {
 //
-            r.getJson(origin, destination, GOOGLE_API_KEY, new Callback<JsonElement>() {
-                        @Override
-                        public void success(JsonElement s, Response response) {
-                            System.out.println("dekho"+response.toString());
-                            try {
-                                parseJSon(s.toString());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-//                            Toast.makeText(DirectionFinder.this, "", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            try{
-                            System.out.println(error.toString()+"mass"+URLEncoder.encode(origin, "utf-8"));
-                            }
-                            catch (Exception e){};
-
-                        }
-                    });
+//            r.getJson(origin, destination, GOOGLE_API_KEY, new Callback<JsonElement>() {
+//                        @Override
+//                        public void success(JsonElement s, Response response) {
+//                            System.out.println("dekho"+response.toString());
+//                            try {
+//                                parseJSon(s.toString());
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+////                            Toast.makeText(DirectionFinder.this, "", Toast.LENGTH_SHORT).show();
+//
+//                        }
+//
+//                        @Override
+//                        public void failure(RetrofitError error) {
+//                            try{
+//                            System.out.println(error.toString()+"mass"+URLEncoder.encode(origin, "utf-8"));
+//                            }
+//                            catch (Exception e){};
+//
+//                        }
+//                    });
 //                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
+//                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 //
 //                }
 //
 //                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
+//                public void onFailure(Call<JsonElement> call, Throwable t) {
 //
 //                }
 //            });

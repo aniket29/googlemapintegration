@@ -2,28 +2,24 @@ package com.example.aniket.googlemapsintegration;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 
 
 import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.aniket.googlemapsintegration.model.DirectionFinder;
+import com.example.aniket.googlemapsintegration.api.DirectionFinder;
 import com.example.aniket.googlemapsintegration.model.DirectionFinderListener;
 import com.example.aniket.googlemapsintegration.model.Route;
 
@@ -31,7 +27,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -110,12 +105,16 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+try {
+    LatLng hcmus = new LatLng(MainActivity.lat, MainActivity.lon);
 
-        LatLng hcmus = new LatLng(MainActivity.lat, MainActivity.lon);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hcmus, 18));
         originMarkers.add(mMap.addMarker(new MarkerOptions()
                 .title("Current Location")
                 .position(hcmus)));
+}
+catch (Exception e)
+{}
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
