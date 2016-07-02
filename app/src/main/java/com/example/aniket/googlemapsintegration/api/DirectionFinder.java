@@ -1,13 +1,10 @@
 package com.example.aniket.googlemapsintegration.api;
-
 import android.os.AsyncTask;
-
 import com.example.aniket.googlemapsintegration.model.DirectionFinderListener;
 import com.example.aniket.googlemapsintegration.model.Distance;
 import com.example.aniket.googlemapsintegration.model.Route;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonElement;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,7 +14,6 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +27,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.util.EntityUtils;
 import java.util.List;
-
 import okhttp3.Request;
 import retrofit.http.GET;
 import retrofit2.Call;
@@ -40,8 +35,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
-
-
 /**
  * Created by aniket on 2
  * 3/6/16.
@@ -76,20 +69,21 @@ public class DirectionFinder
                     .baseUrl("https://maps.googleapis.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-
-MyApiRequestInterface r=retrofit.create(MyApiRequestInterface.class);
+            MyApiRequestInterface r=retrofit.create(MyApiRequestInterface.class);
             Call<JsonElement> call=r.loadRepo(origin,destination,GOOGLE_API_KEY);
             call.enqueue(new Callback<JsonElement>() {
                 @Override
                 public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                     JsonElement j=response.body();
 
-//                    String t=response.body();
+//                   String t=response.body();
                     try {
                         parseJSon(j.toString());
-                    } catch (Exception e) {
+                        }
+
+                    catch (Exception e) {
                         e.printStackTrace();
-                    }
+                                        }
                 }
 
                 @Override
@@ -226,7 +220,7 @@ return responseString;
         }
 
         listener.onDirectionFinderSuccess(routes);
-    }
+        }
 
     private List<LatLng> decodePolyLine(final String poly) {
         int len = poly.length();
@@ -264,4 +258,4 @@ return responseString;
 
         return decoded;
     }
-}
+    }

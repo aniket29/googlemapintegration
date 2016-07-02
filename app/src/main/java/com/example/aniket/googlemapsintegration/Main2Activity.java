@@ -105,16 +105,7 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-try {
-    LatLng hcmus = new LatLng(MainActivity.lat, MainActivity.lon);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hcmus, 18));
-        originMarkers.add(mMap.addMarker(new MarkerOptions()
-                .title("Current Location")
-                .position(hcmus)));
-}
-catch (Exception e)
-{}
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

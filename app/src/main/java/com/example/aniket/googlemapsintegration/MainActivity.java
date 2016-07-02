@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 
-public class MainActivity extends AppCompatActivity implements android.location.LocationListener {
+public class MainActivity extends AppCompatActivity  {
 
     private GoogleMap mMap;
     private LocationManager locationManager;
@@ -115,13 +115,12 @@ public class MainActivity extends AppCompatActivity implements android.location.
 
 //            mName.setText(name);
             if(lenght1==0)
-            mAddress1.setText(name+" "
-            +address);
+            mAddress1.setText(address);
 
          //   mAttributions.setText(Html.fromHtml(attributions));
             else
             if((lenght1!=0)&&(length2==0))
-            mAddress.setText(name+ " "+address);
+            mAddress.setText(address);
 
 
         } else {
@@ -148,7 +147,7 @@ void initialise()
             }
             else
             {
-                locationManager = (LocationManager) MainActivity.this.getSystemService(Context.LOCATION_SERVICE);
+//                locationManager = (LocationManager) MainActivity.this.getSystemService(Context.LOCATION_SERVICE);
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
 //                    int r=ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -163,8 +162,8 @@ void initialise()
 
                 }
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,LocationListenerthis);
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
+//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
+//                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
                 String origin=mAddress1.getText().toString();
                 String destination=mAddress.getText().toString();
                 Toast.makeText(MainActivity.this, mAddress.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -179,23 +178,10 @@ void initialise()
 
 }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        lat=location.getLatitude();
-        lon=location.getLongitude();
-    }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+
+
+
 
     }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }}
