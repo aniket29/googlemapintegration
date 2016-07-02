@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity  {
 //    private GoogleMap w;
     private TextView mAddress;
   static Double lat,lon;
+    private String originId="",destinationId="";
     private int lenght1=0,length2=0,checkWhichaddress=0;
     private TextView mAttributions,mAddress1;
     private   Button pickerButton,navigate;
@@ -110,7 +111,8 @@ mAddress.setEnabled(true);
 
             final Place place = PlacePicker.getPlace(this, data);
             final CharSequence name = place.getName();
-            final CharSequence address = place.getId();
+            final String address = place.getId();
+            final CharSequence addressStr=place.getAddress();
             String t=place.getId();
             String attributions = (String) place.getAttributions();
             if (attributions == null) {
@@ -121,14 +123,16 @@ mAddress.setEnabled(true);
 
 
 //            mName.setText(name);
-            if(checkWhichaddress==2)
-            mAddress1.setText(address);
-
+            if(checkWhichaddress==2) {
+                mAddress1.setText(name+" "+addressStr);
+            originId=address;
+            }
          //   mAttributions.setText(Html.fromHtml(attributions));
             else
-            if(checkWhichaddress==1)
-            mAddress.setText(address);
-
+            if(checkWhichaddress==1) {
+                destinationId=address;
+                mAddress.setText(name+" "+addressStr);
+            }
 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -177,6 +181,8 @@ void initialise()
                 Intent in =new Intent(MainActivity.this,Main2Activity.class);
                 in.putExtra("origin",origin);
                 in.putExtra("destination",destination);
+                in.putExtra("originId",originId);
+                in.putExtra("destinationId",destinationId);
                 startActivity(in);
 
             }

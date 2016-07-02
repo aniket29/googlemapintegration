@@ -84,8 +84,8 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
     }
 
     private void sendRequest() {
-        String origin = etOrigin.getText().toString();
-        String destination = etDestination.getText().toString();
+        String origin = getIntent().getExtras().getString("originId");
+        String destination = getIntent().getExtras().getString("destinationId");
         if (origin.isEmpty()) {
             Toast.makeText(Main2Activity.this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
             return;
