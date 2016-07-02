@@ -110,7 +110,8 @@ mAddress.setEnabled(true);
 
             final Place place = PlacePicker.getPlace(this, data);
             final CharSequence name = place.getName();
-            final CharSequence address = place.getAddress();
+            final CharSequence address = place.getId();
+            String t=place.getId();
             String attributions = (String) place.getAttributions();
             if (attributions == null) {
                 attributions = "";

@@ -70,7 +70,7 @@ public class DirectionFinder
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             MyApiRequestInterface r=retrofit.create(MyApiRequestInterface.class);
-            Call<JsonElement> call=r.loadRepo(origin,destination,GOOGLE_API_KEY);
+            Call<JsonElement> call=r.loadRepo("place_id:"+origin,"place_id:"+destination,GOOGLE_API_KEY);
             call.enqueue(new Callback<JsonElement>() {
                 @Override
                 public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
