@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity  {
 //    private GoogleMap w;
     private TextView mAddress;
   static Double lat,lon;
-    private int lenght1=0,length2=0;
+    private int lenght1=0,length2=0,checkWhichaddress=0;
     private TextView mAttributions,mAddress1;
     private   Button pickerButton,navigate;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
+                checkWhichaddress=1;
 
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
                 Toast.makeText(MainActivity.this, "Please wait while we redirect to the suggestion page!", Toast.LENGTH_SHORT).show();
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity  {
         mAddress1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkWhichaddress=2;
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
 //                startActivity(in);
                 Toast.makeText(MainActivity.this, "Please wait while we redirect to the suggestion page!", Toast.LENGTH_SHORT).show();
@@ -113,13 +115,14 @@ public class MainActivity extends AppCompatActivity  {
  lenght1=mAddress1.getText().toString().trim().length();
             length2=mAddress.getText().toString().trim().length();
 
+
 //            mName.setText(name);
-            if(lenght1==0)
+            if(checkWhichaddress==2)
             mAddress1.setText(address);
 
          //   mAttributions.setText(Html.fromHtml(attributions));
             else
-            if((lenght1!=0)&&(length2==0))
+            if(checkWhichaddress==1)
             mAddress.setText(address);
 
 
