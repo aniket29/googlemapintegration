@@ -43,7 +43,7 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     protected com.google.android.gms.location.LocationListener locationListener;
     private Button btnFindPath;
-//    private Double lat,lon;
+    //    private Double lat,lon;
     private EditText etOrigin;
     private EditText etDestination;
     private List<Marker> originMarkers = new ArrayList<>();
@@ -72,11 +72,11 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("aniket"+etOrigin.getText().toString()+"verma"+etDestination.getText().toString());
-                String t="http://maps.google.com/maps?saddr="+etOrigin.getText().toString()+"&daddr="+etDestination.getText().toString();
-                Uri r=Uri.parse(t);
+                System.out.println("aniket" + etOrigin.getText().toString() + "verma" + etDestination.getText().toString());
+                String t = "http://maps.google.com/maps?saddr=" + etOrigin.getText().toString() + "&daddr=" + etDestination.getText().toString();
+                Uri r = Uri.parse(t);
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr="+etOrigin.getText().toString()+"&daddr="+etDestination.getText().toString()));
+                        Uri.parse("http://maps.google.com/maps?saddr=" + etOrigin.getText().toString() + "&daddr=" + etDestination.getText().toString()));
                 startActivity(intent);
             }
         });
@@ -139,7 +139,7 @@ public class Main2Activity extends FragmentActivity implements OnMapReadyCallbac
         }
 
         if (polylinePaths != null) {
-            for (Polyline polyline:polylinePaths ) {
+            for (Polyline polyline : polylinePaths) {
                 polyline.remove();
             }
         }

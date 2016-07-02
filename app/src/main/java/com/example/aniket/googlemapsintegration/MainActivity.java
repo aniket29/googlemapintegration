@@ -25,20 +25,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
     private LocationManager locationManager;
     protected com.google.android.gms.location.LocationListener locationListener;
     private static final int PLACE_PICKER_REQUEST = 1;
     private TextView mName;
-//    private GoogleMap w;
+    //    private GoogleMap w;
     private TextView mAddress;
-  static Double lat,lon;
-    private String originId="",destinationId="";
-    private int lenght1=0,length2=0,checkWhichaddress=0;
-    private TextView mAttributions,mAddress1;
-    private   Button pickerButton,navigate;
+    static Double lat, lon;
+    private String originId = "", destinationId = "";
+    private int lenght1 = 0, length2 = 0, checkWhichaddress = 0;
+    private TextView mAttributions, mAddress1;
+    private Button pickerButton, navigate;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
 
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity  {
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-mAddress.setEnabled(false);
-                checkWhichaddress=1;
+                mAddress.setEnabled(false);
+                checkWhichaddress = 1;
 
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
                 Toast.makeText(MainActivity.this, "Please wait while we redirect to the suggestion page!", Toast.LENGTH_SHORT).show();
@@ -74,7 +74,7 @@ mAddress.setEnabled(false);
             @Override
             public void onClick(View v) {
                 mAddress1.setEnabled(false);
-                checkWhichaddress=2;
+                checkWhichaddress = 2;
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
 //                startActivity(in);
                 Toast.makeText(MainActivity.this, "Please wait while we redirect to the suggestion page!", Toast.LENGTH_SHORT).show();
@@ -91,19 +91,19 @@ mAddress.setEnabled(false);
                 }
             }
         });
-    pickerButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mAddress.setText("");
-            mAddress1.setText("");
-        }
-    });
+        pickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAddress.setText("");
+                mAddress1.setText("");
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
-mAddress.setEnabled(true);
+        mAddress.setEnabled(true);
         mAddress1.setEnabled(true);
         if (requestCode == PLACE_PICKER_REQUEST
                 && resultCode == Activity.RESULT_OK) {
@@ -112,26 +112,25 @@ mAddress.setEnabled(true);
             final Place place = PlacePicker.getPlace(this, data);
             final CharSequence name = place.getName();
             final String address = place.getId();
-            final CharSequence addressStr=place.getAddress();
-            String t=place.getId();
+            final CharSequence addressStr = place.getAddress();
+            String t = place.getId();
             String attributions = (String) place.getAttributions();
             if (attributions == null) {
                 attributions = "";
             }
- lenght1=mAddress1.getText().toString().trim().length();
-            length2=mAddress.getText().toString().trim().length();
+            lenght1 = mAddress1.getText().toString().trim().length();
+            length2 = mAddress.getText().toString().trim().length();
 
 
 //            mName.setText(name);
-            if(checkWhichaddress==2) {
-                mAddress1.setText(name+" "+addressStr);
-            originId=address;
+            if (checkWhichaddress == 2) {
+                mAddress1.setText(name + " " + addressStr);
+                originId = address;
             }
-         //   mAttributions.setText(Html.fromHtml(attributions));
-            else
-            if(checkWhichaddress==1) {
-                destinationId=address;
-                mAddress.setText(name+" "+addressStr);
+            //   mAttributions.setText(Html.fromHtml(attributions));
+            else if (checkWhichaddress == 1) {
+                destinationId = address;
+                mAddress.setText(name + " " + addressStr);
             }
 
         } else {
@@ -139,62 +138,53 @@ mAddress.setEnabled(true);
         }
     }
 
-void initialise()
-{
+    void initialise() {
 
-    mName = (TextView) findViewById(R.id.textView);
-    mAddress = (TextView) findViewById(R.id.add2);
-    mAddress1=(TextView) findViewById(R.id.add1);
+        mName = (TextView) findViewById(R.id.textView);
+        mAddress = (TextView) findViewById(R.id.add2);
+        mAddress1 = (TextView) findViewById(R.id.add1);
 
-    mAttributions = (TextView) findViewById(R.id.textView3);
-    pickerButton = (Button) findViewById(R.id.pickerButton);
-    navigate=(Button)findViewById(R.id.navigate);
-    navigate.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if((mAddress.getText().toString().length()==0)||(mAddress1.getText().toString().length()==0))
-            {
-                Toast.makeText(MainActivity.this, "Please pick two address", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
+        mAttributions = (TextView) findViewById(R.id.textView3);
+        pickerButton = (Button) findViewById(R.id.pickerButton);
+        navigate = (Button) findViewById(R.id.navigate);
+        navigate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((mAddress.getText().toString().length() == 0) || (mAddress1.getText().toString().length() == 0)) {
+                    Toast.makeText(MainActivity.this, "Please pick two address", Toast.LENGTH_SHORT).show();
+                } else {
 //                locationManager = (LocationManager) MainActivity.this.getSystemService(Context.LOCATION_SERVICE);
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
 //                    int r=ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
 
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
 
-                }
+                    }
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,LocationListenerthis);
 //                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
 //                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
-                String origin=mAddress1.getText().toString();
-                String destination=mAddress.getText().toString();
+                    String origin = mAddress1.getText().toString();
+                    String destination = mAddress.getText().toString();
 //                Toast.makeText(MainActivity.this, mAddress.getText().toString(), Toast.LENGTH_SHORT).show();
-                Intent in =new Intent(MainActivity.this,Main2Activity.class);
-                in.putExtra("origin",origin);
-                in.putExtra("destination",destination);
-                in.putExtra("originId",originId);
-                in.putExtra("destinationId",destinationId);
-                startActivity(in);
+                    Intent in = new Intent(MainActivity.this, Main2Activity.class);
+                    in.putExtra("origin", origin);
+                    in.putExtra("destination", destination);
+                    in.putExtra("originId", originId);
+                    in.putExtra("destinationId", destinationId);
+                    startActivity(in);
 
+                }
             }
-        }
-    });
-
-}
-
-
-
-
-
-
+        });
 
     }
+
+
+}
