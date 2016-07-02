@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity  {
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+mAddress.setEnabled(false);
                 checkWhichaddress=1;
 
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity  {
         mAddress1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAddress1.setEnabled(false);
                 checkWhichaddress=2;
 //                Intent in =new Intent(MainActivity.this,Main2Activity.class);
 //                startActivity(in);
@@ -101,9 +102,11 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
-
+mAddress.setEnabled(true);
+        mAddress1.setEnabled(true);
         if (requestCode == PLACE_PICKER_REQUEST
                 && resultCode == Activity.RESULT_OK) {
+
 
             final Place place = PlacePicker.getPlace(this, data);
             final CharSequence name = place.getName();
