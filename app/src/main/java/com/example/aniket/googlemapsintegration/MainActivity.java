@@ -177,7 +177,7 @@ void initialise()
 //                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) MainActivity.this);
                 String origin=mAddress1.getText().toString();
                 String destination=mAddress.getText().toString();
-                Toast.makeText(MainActivity.this, mAddress.getText().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, mAddress.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent in =new Intent(MainActivity.this,Main2Activity.class);
                 in.putExtra("origin",origin);
                 in.putExtra("destination",destination);
